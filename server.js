@@ -2,6 +2,7 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+const port = process.env.PORT || 3000;
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials')
@@ -12,6 +13,7 @@ app.use((req,res,next) => {
   var now =new Date().toString();
   //console.log(`${now}:`)
   var log = `${now}: ${req.method} ${req.url}`;
+
   console.log(log);
   fs.appendFile('server.log',log + '\n', (err) => {
     if(err){
@@ -65,7 +67,9 @@ app.get('/bad', (req, res) =>
   });
 });
 
-app.listen(3000);
+app.listen(port, () => {
+  console.log(`server is up on port ${port} `);
+});
 
 //git remote add origin https://github.com/poojaverma94/node-course-2-web-server.git
 //git push -u origin master
